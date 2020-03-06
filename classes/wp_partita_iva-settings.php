@@ -357,25 +357,6 @@ if ( ! class_exists( 'wp_partita_iva_Settings' ) ) {
 			if ( ! is_string( $new_settings['db-version'] ) ) {
 				$new_settings['db-version'] = WordPress_Partita_IVA::VERSION;
 			}
-
-
-			/*
-			 * Basic Settings
-			 */
-
-			if ( strcmp( $new_settings['basic']['field-1'], 'valid data' ) !== 0 ) {
-			//	add_notice( ' 1 must equal "valid data"', 'error' );
-				$new_settings['basic']['field-1'] = self::$default_settings['basic']['field-1'];
-			}
-
-
-			/*
-			 * Advanced Settings
-			 */
-
-			$new_settings['advanced']['field-2'] = absint( $new_settings['advanced']['field-2'] );
-
-
 			return $new_settings;
 		}
 
@@ -403,10 +384,6 @@ if ( ! class_exists( 'wp_partita_iva_Settings' ) ) {
 		 * @param int $user_id
 		 */
 		public static function save_user_fields( $user_id ) {
-			$user_fields = self::validate_user_fields( $user_id, $_POST );
-
-			update_user_meta( $user_id, 'wp_partita_iva_user--field1', $user_fields[ 'wp_partita_iva_user--field1' ] );
-			update_user_meta( $user_id, 'wp_partita_iva_user--field2', $user_fields[ 'wp_partita_iva_user--field2' ] );
 		}
 
 		/**
@@ -418,21 +395,7 @@ if ( ! class_exists( 'wp_partita_iva_Settings' ) ) {
 		 * @param array $user_fields
 		 * @return array
 		 */
-		public static function validate_user_fields( $user_id, $user_fields ) {
-			if ( $user_fields[ 'wp_partita_iva_user--field1' ] == false ) {
-				$user_fields[ 'wp_partita_iva_user--field1' ] = true;
-				add_notice( ' Field 1 should be true', 'error' );
-			}
-
-			if ( ! current_user_can( 'manage_options' ) ) {
-				$current_field2 = get_user_meta( $user_id, 'wp_partita_iva_user--field2', true );
-
-				if ( $current_field2 != $user_fields[ 'wp_partita_iva_user--field2' ] ) {
-					$user_fields[ 'wp_partita_iva_user--field2' ] = $current_field2;
-					add_notice( 'Only administrators can change  Field 2.', 'error' );
-				}
-			}
-
+		public static function validate_user_fields( $user_fields ) {
 			return $user_fields;
 		}
 	} // end wp_partita_iva_Settings
