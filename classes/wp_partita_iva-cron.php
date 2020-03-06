@@ -4,6 +4,7 @@ if ( ! class_exists( 'wp_partita_iva_Cron' ) ) {
 
 	/**
 	 * Handles cron jobs and intervals
+     * Test for GIT
 	 *
 	 * Note: Because WP-Cron only fires hooks when HTTP requests are made, make sure that an external monitoring service pings the site regularly to ensure hooks are fired frequently
 	 */
@@ -82,8 +83,7 @@ if ( ! class_exists( 'wp_partita_iva_Cron' ) ) {
 		 */
 		public static function _job() {
 			// Do stuff
-
-			wer4add_notice( __METHOD__ . ' cron job fired.' );
+return '';
 		}
 
 
