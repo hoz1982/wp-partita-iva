@@ -43,7 +43,7 @@ if ( ! class_exists( 'wp_partita_iva_Settings' ) ) {
 			if ( $variable != 'settings' ) {
 				return;
 			}
-
+            print_r($variable . $value);
 			$this->settings = self::validate_settings( $value );
 			update_option( 'wp_partita_iva_settings', $this->settings );
 		}
@@ -137,15 +137,22 @@ if ( ! class_exists( 'wp_partita_iva_Settings' ) ) {
 		 *
 		 * @mvc Model
 		 *
-		 * @return array
-		 */
-		protected static function get_default_settings() {
-			$basic = array(
-				'field-1' => ''
-			);
+         * @return array
+         */
+        protected static function get_default_settings()
+        {
+            $basic = array(
+                'field-cf' => 0,
+                'field-pi' => 0,
+                'field-nin' => 0,
+                'field-pec' => 0
+            );
 
 			$advanced = array(
-				'field-2' => ''
+                'field-obb-cf' => 0,
+                'field-obb-pi' => 0,
+                'field-obb-nin' => 0,
+                'field-obb-pec' => 0
 			);
 
 			return array(
@@ -231,7 +238,7 @@ if ( ! class_exists( 'wp_partita_iva_Settings' ) ) {
 				'wp_partita_iva_settings'
 			);
 
-			add_settings_field(
+            add_settings_field(
 				'wp_partita_iva_field-cf',
 				'Codice Fiscale',
 				array( $this, 'markup_fields' ),
@@ -333,15 +340,25 @@ if ( ! class_exists( 'wp_partita_iva_Settings' ) ) {
 		 *
 		 * @param array $field
 		 */
-		public function markup_fields( $field ) {
-			switch ( $field['label_for'] ) {
-				case 'wp_partita_iva_field-1':
-					// Do any extra processing here
-					break;
-			}
+        public function markup_fields($field)
+        {
+            switch ($field['label_for']) {
+                case 'wp_partita_iva_field-cf':
+//print_r();
+                    break;
+                case 'wp_partita_iva_field-pi':
+                    // Do any extra processing here
+                    break;
+                case 'wp_partita_iva_field-nin':
+                    // Do any extra processing here
+                    break;
+                case 'wp_partita_iva_field-pec':
+                    // Do any extra processing here
+                    break;
+            }
 
-			echo self::render_template( 'wp_partita_iva-settings/page-settings-fields.php', array( 'settings' => $this->settings, 'field' => $field ), 'always' );
-		}
+            echo self::render_template('wp_partita_iva-settings/page-settings-fields.php', array('settings' => $this->settings, 'field' => $field), 'always');
+        }
 
 		/**
 		 * Validates submitted setting values before they get saved to the database. Invalid data will be overwritten with defaults.
@@ -353,10 +370,35 @@ if ( ! class_exists( 'wp_partita_iva_Settings' ) ) {
 		 */
 		public function validate_settings( $new_settings ) {
 			$new_settings = shortcode_atts( $this->settings, $new_settings );
+            // print_r($new_settings);
 
-			if ( ! is_string( $new_settings['db-version'] ) ) {
-				$new_settings['db-version'] = WordPress_Partita_IVA::VERSION;
-			}
+            if (!is_string($new_settings['db-version'])) {
+                $new_settings['db-version'] = WordPress_Partita_IVA::VERSION;
+            }
+            if (!is_string($new_settings['basic']['field-cf'])) {
+                // $new_settings['basic']['field-cf'] = WordPress_Partita_IVA::AB_CF;
+            }
+            if (!is_string($new_settings['basic']['field-pi'])) {
+                //   $new_settings['basic']['field-pi'] = WordPress_Partita_IVA::AB_PI;
+            }
+            if (!is_string($new_settings['basic']['field-nin'])) {
+                // $new_settings['basic']['field-nin'] = WordPress_Partita_IVA::AB_NIN;
+            }
+            if (!is_string($new_settings['basic']['field-pec'])) {
+                // $new_settings['basic']['field-pec'] = WordPress_Partita_IVA::AB_PEC;
+            }
+            if (!is_string($new_settings['basic']['field-obb-cf'])) {
+                // $new_settings['basic']['field-obb-cf'] = WordPress_Partita_IVA::OBB_CF;
+            }
+            if (!is_string($new_settings['basic']['field-obb-pi'])) {
+                // $new_settings['basic']['field-obb-pi'] = WordPress_Partita_IVA::OBB_PI;
+            }
+            if (!is_string($new_settings['basic']['field-obb-nin'])) {
+                //$new_settings['basic']['field-obb-nin'] = WordPress_Partita_IVA::OBB_PEC;
+            }
+            if (!is_string($new_settings['basic']['field-obb-pec'])) {
+                //$new_settings['basic']['field-obb-pec'] = WordPress_Partita_IVA::OBB_PEC;
+            }
 			return $new_settings;
 		}
 

@@ -66,7 +66,7 @@ if ( wp_partita_iva_requirements_met() ) {
 	require_once( __DIR__ . '/classes/wp_partita_iva-cron.php' );
 	require_once( __DIR__ . '/classes/wp_partita_iva-instance-class.php' );
 
-	if ( class_exists( 'WordPress_Partita_IVA' ) ) {
+    if (class_exists('WordPress_Partita_IVA')) {
 		$GLOBALS['wp_partita_iva'] = WordPress_Partita_IVA::get_instance();
 		register_activation_hook(   __FILE__, array( $GLOBALS['wp_partita_iva'], 'activate' ) );
 		register_deactivation_hook( __FILE__, array( $GLOBALS['wp_partita_iva'], 'deactivate' ) );
