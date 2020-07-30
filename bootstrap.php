@@ -22,7 +22,6 @@ You should have received a copy of the GNU General Public License along with Woo
 Tags: fattura-elettronica,fattura,elettronica,woocommerce,woocommerce-fattura-elettronica,codice-fiscale,pec,iva,codice-univoco,codice-cliente
 */
 
-
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Access denied.' );
 }
