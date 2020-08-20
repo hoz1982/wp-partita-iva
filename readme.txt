@@ -9,9 +9,12 @@ Wooocommerce Partita Iva e Fattura Elettronica FREE adds to the Woocommerce stan
 Version:     1.1
 Author:      Alessandro Romani
 Author URI:  https://www.blacklotus.eu
-License: GPL2
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-
+Requires at least: 5.1
+Tested up to: 5.2
+Requires PHP: 7.2
+Stable tag: 4.3
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Wooocommerce Partita Iva e Fattura Elettronica FREE is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or any later version.
 
