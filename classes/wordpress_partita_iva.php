@@ -552,18 +552,6 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
         // return $fields;
     }
 
-    /*ORIONBOTTLE - RIMUOVO BILLING STATE E INSERISCO NUOVO CAMPO PROVINCIA
-    */
-
-    add_filter('woocommerce_checkout_fields', 'wp_partita_iva_partial_unsetting_checkout_fields');
-    function wp_partita_iva_partial_unsetting_checkout_fields($fields)
-    {
-        unset($fields['billing']['billing_state']);
-        unset($fields['shipping']['shipping_state']);
-
-        return $fields;
-    }
-
     // Reinserting custom billing state and post code checkout fields
     add_filter('woocommerce_default_address_fields', 'wp_partita_iva_override_default_address_fields');
     function wp_partita_iva_override_default_address_fields($address_fields)
@@ -651,13 +639,8 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
                 continue; // Go to next loop iteration
 
             $product_id = $item->get_product_id();
-            // Untested part
-            //  $soldby =  wp_get_object_terms( $product_id, 'soldby', false );
-            //  if( empty($soldby) ) continue; // Go to next loop iteration
-            //  $seller_id = $soldby[0]->name;// $seller = get_user_by( 'ID', $seller_id );
-            // $seller->user_email = 'maildialex@gmail.com';
-            // $seller_email = 'info@blacklotus.eu';
-            $seller_email = 'info@orionbottle.com';
+
+            $seller_email = get_bloginfo('admin_email');
 
             // Set the data in an array (avoiding seller email repetitions)
             $data[$seller_email][] = array(
@@ -699,7 +682,7 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
             foreach ($values as $value) {
                 $subject_arr[] = $value['title'];
                 $message .= 'Buongiorno,<br>';
-                $message .= 'è stato richiesto di emettere una nuova fattura dal negozio online Orionbottle. Di seguito i dettagli per la fattura elettronica:<br>';
+                $message .= 'è stato richiesto di emettere una nuova fattura elettronica. Di seguito i dettagli per la fattura elettronica:<br>';
                 $message .= 'ID ORDINE: ' . $orderid . ' <br>';
                 $message .= 'NOME: ' . $nome . ' <br>';
                 $message .= 'COGNOME:' . $cognome . ' <br>';
@@ -717,11 +700,10 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
                 $message .= 'RICHIESTA FATTURA: ' . $richiesta . ' <br>';
 
             }
-            $subject = 'Richiesta di invio fattura dal negozio online Orionbottle: ';
+            $subject = 'Richiesta di invio fattura elettronica: ';
 
             // Send email to seller
             wp_mail($to, $subject, $message);
-            //    remove_filter( 'wp_mail_content_type', 'wpdocs_set_html_mail_content_type' );
 
         }
         //   exit();
