@@ -431,7 +431,6 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
         }
     add_filter('woocommerce_checkout_get_value', 'wp_partita_iva_populate_customer_billing_fields_in_checkout', 10, 2 );
 
-
         /*    Salvo le modifiche sui campi custom effettuate dall'area personale dell'utente (billing address)
         */
         function wp_partita_iva_store_customer_billing_fields_in_address( $user_id )
@@ -494,7 +493,6 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
             if (!empty($_POST['billing_fatt']))
                 $dato_fatt = 'Si';
             update_user_meta($user_id, 'billing_fatt', sanitize_text_field($dato_fatt));
-            //  update_user_meta($user_id, 'billing_fatt', sanitize_text_field($_POST['billing_fatt']));
         }
 
     add_action( 'woocommerce_checkout_update_user_meta', 'wp_partita_iva_store_customer_billing_fields_in_checkout' );
@@ -505,58 +503,21 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
         */
         function wp_partita_iva_validate_customer_billing_fields_in_checkout()
         {
-            $billing_vat = trim( $_POST['billing_vat'] );
-            $billing_cf = trim($_POST['billing_cf']);
-            $billing_nin = trim( $_POST['billing_nin'] );
-            $billing_pec = trim( $_POST['billing_pec'] );
-            $billing_pec = trim($_POST['billing_fatt']);
+            $billing_vat = sanitize_text_field(trim($_POST['billing_vat']));
+            $billing_cf = sanitize_text_field(trim($_POST['billing_cf']));
+            $billing_nin = sanitize_text_field(trim($_POST['billing_nin']));
+            $billing_pec = sanitize_text_field(trim($_POST['billing_pec']));
 
-            // if (empty($billing_vat) && empty($billing_cf))
-            //   wc_add_notice( __( 'You must insert a Codice Fiscale or Vat Code.' ), 'error' );
-            //if (empty($billing_nin) && empty($billing_pec))
-            //  wc_add_notice( __( 'Devi inserire un Codice Cliente o una casella di Posta Elettronica Certificata.' ), 'error' );
+            if (empty($billing_vat) && empty($billing_cf))
+                wc_add_notice(__('You must insert a Codice Fiscale or Vat Code.'), 'error');
+            if (empty($billing_nin) && empty($billing_pec))
+                wc_add_notice(__('Devi inserire un Codice Cliente o una casella di Posta Elettronica Certificata.'), 'error');
         }
-
-    // add_action('woocommerce_checkout_process', 'wp_partita_iva_validate_customer_billing_fields_in_checkout');
-
-    /*    Imposto l'ordine di apparizione dei campi del form
-                */
-
-
-    function wp_partita_iva_woocommerce_default_address_fields($fields)
-    {
-
-        // default priorities:
-        // 'first_name' - 10
-        // 'last_name' - 20
-        // 'company' - 30
-        // 'country' - 40
-        // 'address_1' - 50
-        // 'address_2' - 60
-        // 'city' - 70
-        // 'state' - 80
-        // 'postcode' - 90
-
-        // e.g. move 'company' above 'first_name':
-        // just assign priority less than 10
-        // $fields['field-pi']['priority'] = 0;
-        //    $fields['state']['type'] = 'text';
-        //  unset($fields['state']);
-        // unset($fields['billing_state']);
-        // unset($fields['shipping_state']);
-
-        //  echo '<pre>';
-        //  print_r($fields);
-        //  echo '</pre>';
-
-        // return $fields;
-    }
 
     // Reinserting custom billing state and post code checkout fields
     add_filter('woocommerce_default_address_fields', 'wp_partita_iva_override_default_address_fields');
     function wp_partita_iva_override_default_address_fields($address_fields)
     {
-
         // @ for state
         $address_fields['billing_state']['type'] = 'text';
         $address_fields['billing_state']['class'] = array('form-row-wide');
@@ -571,7 +532,6 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
         function wp_partita_iva_add_customer_billing_fields_in_admin_order_meta( $order )
         {
             $settings = get_option('wp_partita_iva_settings', array());
-
             $abilitazione_cf = $settings['basic']['field-cf'];
             $abilitazione_pi = $settings['basic']['field-pi'];
             $abilitazione_nin = $settings['basic']['field-nin'];
@@ -616,9 +576,9 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
     /*    Salvataggio campi fattura elettronica se utente non chiede di registrarsi (ospite)
     */
         function wp_partita_iva_before_checkout_create_order( $order )
-        {   //$order_id = $order->get_id();
-            $billing_pec = trim( $_POST['billing_pec'] );
-            $billing_nin = trim($_POST['billing_nin']);
+        {
+            $billing_pec = sanitize_text_field(trim($_POST['billing_pec']));
+            $billing_nin = sanitize_text_field(trim($_POST['billing_nin']));
 
             update_post_meta($order->id, '_billing_nin', sanitize_text_field($billing_nin));
             update_post_meta( $order->id, '_billing_pec', sanitize_text_field( $billing_pec ) );
@@ -705,7 +665,6 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
             wp_mail($to, $subject, $message);
 
         }
-        //   exit();
     }
 
     add_action('woocommerce_new_order', 'new_order_seller_notification', 10, 1);
@@ -739,6 +698,4 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
     {
         return 'text/html';
     }
-
-
 }
