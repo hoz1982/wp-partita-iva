@@ -3,11 +3,11 @@
  * Created by Alessandro Romani.
  * Date: 09/03/2020
  * Time: 14:18
- * This installer class will install the required DB Table for the Partita Iva Plugin and default values.
+ * This installer class will install the required DB Table for the WP Partita Iva Plugin and default values.
  */
 
 global $wpdb;
-$table_name = $wpdb->prefix . "partita_iva";
+$table_name = $wpdb->prefix . "wp-partita-iva";
 $db_version = '1.0.0';
 $charset_collate = $wpdb->get_charset_collate();
 

@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: Wooocommerce Partita Iva e Fattura Elettronica FREE
-Plugin URI:  https://github.com/hoz1982/woocommerce-partita-iva
-Description: Wooocommerce Partita Iva e Fattura Elettronica FREE Aggiunge il supporto per l'inserimento nel form di pagamento di Woocommerce dei campi Partita IVA, Codice Fiscale, Codice Cliente e indirizzo PEC, necessari alla fatturazione elettronica in Italia. Inserisce inoltre una checkbox nel form di pagamento in cui l'utente può indicare la necessità di una fattura elettronica per l'acquisto, che può essere gestita esternamente. All'emissione dell'ordine una mail di avviso verrà inviata all'indirizzo dell'amministratore del sito, contenente tutte le informazioni necessarie all'emissione. 
+Plugin Name: Partita Iva e Fattura Elettronica per Woocommerce
+Plugin URI:  https://github.com/hoz1982/wp-partita-iva
+Description: Partita Iva e Fattura Elettronica per Woocommerce Aggiunge il supporto per l'inserimento nel form di pagamento di Woocommerce dei campi Partita IVA, Codice Fiscale, Codice Cliente e indirizzo PEC, necessari alla fatturazione elettronica in Italia. Inserisce inoltre una checkbox nel form di pagamento in cui l'utente può indicare la necessità di una fattura elettronica per l'acquisto, che può essere gestita esternamente. All'emissione dell'ordine una mail di avviso verrà inviata all'indirizzo dell'amministratore del sito, contenente tutte le informazioni necessarie all'emissione.
 
-Wooocommerce Partita Iva e Fattura Elettronica FREE adds to the Woocommerce standard checkout form some custom fields(VAT Number, Fiscal Code, NIN Code and PEC email address) required for the italian market.
+Partita Iva e Fattura Elettronica per Woocommerce adds to the Woocommerce standard checkout form some custom fields(VAT Number, Fiscal Code, NIN Code and PEC email address) required for the italian market.
 
 Version:     1.1
 Author:      Alessandro Romani
@@ -12,12 +12,11 @@ Author URI:  https://www.blacklotus.eu
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
+Partita Iva e Fattura Elettronica per Woocommerce  is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or any later version.
 
-Wooocommerce Partita Iva e Fattura Elettronica FREE is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or any later version.
+Partita Iva e Fattura Elettronica per Woocommerce  is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-Wooocommerce Partita Iva e Fattura Elettronica FREE is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with Wooocommerce Partita Iva e Fattura Elettronica FREE. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
+You should have received a copy of the GNU General Public License along with Partita Iva e Fattura Elettronica per Woocommerce . If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 
 Tags: fattura-elettronica,fattura,elettronica,woocommerce,woocommerce-fattura-elettronica,codice-fiscale,pec,iva,codice-univoco,codice-cliente
 */
@@ -26,14 +25,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Access denied.' );
 }
 
-define( 'wp_partita_iva_NAME',                 'Wooocommerce Partita Iva e Fattura Elettronica FREE' );
+define('wp_partita_iva_NAME', 'Partita Iva e Fattura Elettronica per Woocommerce');
 define( 'wp_partita_iva_REQUIRED_PHP_VERSION', '5.3' );                          // because of get_called_class()
 define( 'wp_partita_iva_REQUIRED_WP_VERSION',  '3.1' );                          // because of esc_textarea()
 
-/**
- * Checks if the system requirements are met
- *
- * @return bool True if system requirements are met, false if not
+/**tem requirements are met, false if not
  */
 function wp_partita_iva_requirements_met() {
 	global $wp_version;
@@ -47,11 +43,6 @@ function wp_partita_iva_requirements_met() {
 		return false;
 	}
 
-	/*
-	if ( ! is_plugin_active( 'plugin-directory/plugin-file.php' ) ) {
-		return false;
-	}
-	*/
 
 	return true;
 }

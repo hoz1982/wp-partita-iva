@@ -612,9 +612,9 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
             echo $billing_fatt_label . '</p>';
     }
     add_action( 'woocommerce_admin_order_data_after_billing_address', 'wp_partita_iva_add_customer_billing_fields_in_admin_order_meta', 10, 1 );
-//    add_filter( 'woocommerce_default_address_fields', 'wp_partita_iva_woocommerce_default_address_fields' );
-        /*    Salvataggio campi fattura elettronica se utente non chiede di registrarsi (ospite)
-        */
+
+    /*    Salvataggio campi fattura elettronica se utente non chiede di registrarsi (ospite)
+    */
         function wp_partita_iva_before_checkout_create_order( $order )
         {   //$order_id = $order->get_id();
             $billing_pec = trim( $_POST['billing_pec'] );
@@ -632,7 +632,6 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
     {
         $data = array();
         $orderid = $order->get_id();
-        // Get and Loop Over Order Items
         // Loop through each order item
         foreach ($order->get_items() as $item_id => $item) {
             if (get_post_meta($order->get_id(), '_sent_to_seller_' . $item_id, true))
