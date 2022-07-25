@@ -9,7 +9,7 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
 	 */
 	class WordPress_Partita_IVA extends wp_partita_iva_Module {
 		protected static $readable_properties  = array();    // These should really be constants, but PHP doesn't allow class constants to be arrays
-		protected static $writeable_properties = array();
+		protected static $writeable_properties = array();    //forza INTER
 		protected $modules;
 
         const VERSION = '1.1';
