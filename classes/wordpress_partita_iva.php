@@ -443,7 +443,7 @@ if ( ! class_exists( 'WordPress_Partita_IVA' ) ) {
             $abilitazione_pec = $settings['basic']['field-pec'];
             if ($abilitazione_pi == 1) {
                 if (!empty($_POST['billing_vat']))
-                    update_user_meta($user_id, 'billing_vat', sanitize_text_field($_POST['billing_vat']));
+                    update_user_meta($user_id, 'billing_vat', sanitize_text_field($_POST['billing_vat'])); //sanitize
             }
             if ($abilitazione_cf == 1) {
                 if (!empty($_POST['billing_cf']))
